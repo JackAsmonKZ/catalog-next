@@ -31,7 +31,7 @@ export default async function CollectionPage({ params }: Params) {
   })[];
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-[10px] max-w-6xl mx-auto">
       <ClientCollection collection={collection} products={products} />
     </div>
   );

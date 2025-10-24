@@ -38,7 +38,7 @@ export const products: Product[] = [
       { volume: "100g", price: 2690 },
     ],
     categoryId: "cat-2",
-    isLiked: true,
+    isLiked: false,
   },
   {
     id: "prod-4",
@@ -64,7 +64,7 @@ export const products: Product[] = [
       { volume: "50ml", price: 3290 },
     ],
     categoryId: "cat-4",
-    isLiked: true,
+    isLiked: false,
   },
   {
     id: "prod-6",

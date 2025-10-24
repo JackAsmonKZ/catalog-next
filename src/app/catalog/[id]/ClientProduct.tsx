@@ -15,7 +15,6 @@ export default function ClientProduct({ product, collections }: Props) {
   const [liked, setLiked] = useState<boolean>(!!product.isLiked);
   const [toast, setToast] = useState<string | null>(null);
 
-  // Initialize liked from localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem("catalog_likes");
@@ -23,9 +22,7 @@ export default function ClientProduct({ product, collections }: Props) {
         const map = JSON.parse(raw) as Record<string, boolean>;
         setLiked(!!map[product.id]);
       }
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) {}
   }, [product.id]);
 
   useEffect(() => {
@@ -79,12 +76,9 @@ export default function ClientProduct({ product, collections }: Props) {
         });
       }
       localStorage.setItem("catalog_cart", JSON.stringify(cart));
-      // notify other listeners in the same tab
       try {
         window.dispatchEvent(new Event("cart_updated"));
-      } catch (e) {
-        // ignore
-      }
+      } catch (e) {}
       setToast("Добавлено в корзину");
       try {
         window.dispatchEvent(
@@ -150,7 +144,7 @@ export default function ClientProduct({ product, collections }: Props) {
                   key={v.volume}
                   className={`flex items-center gap-2 px-3 py-1 rounded-md border cursor-pointer transition-colors ${
                     idx === selectedIndex
-                      ? "bg-black text-white border-black"
+                      ? "bg-[#C2A389] text-white"
                       : "bg-white text-gray-700 border-gray-200"
                   }`}
                 >
@@ -174,7 +168,7 @@ export default function ClientProduct({ product, collections }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={addToCart}
-                className="px-4 py-2 bg-black text-white rounded-md hover:opacity-95 transition-opacity"
+                className="px-4 py-2 bg-[#C2A389] text-white rounded-md hover:opacity-95 transition-opacity"
               >
                 Добавить в корзину
               </button>
@@ -204,7 +198,7 @@ export default function ClientProduct({ product, collections }: Props) {
 
       {toast && (
         <div className="fixed left-4 bottom-6 z-50">
-          <div className="bg-black text-white px-2 py-1 rounded shadow">
+          <div className="bg-[#C2A389] text-white px-2 py-1 rounded shadow">
             {toast}
           </div>
         </div>

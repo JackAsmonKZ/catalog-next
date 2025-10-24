@@ -90,7 +90,7 @@ export default function CartPage() {
           <div className="mt-6">
             <button
               onClick={() => router.push("/catalog")}
-              className="px-4 py-2 bg-black text-white rounded-md"
+              className="px-4 py-2 bg-[#C2A389] text-white rounded-md"
             >
               Перейти в каталог
             </button>
@@ -187,7 +187,7 @@ export default function CartPage() {
                   );
                 } catch (e) {}
               }}
-              className="w-full px-4 py-2 bg-black text-white rounded-md"
+              className="w-full px-4 py-2 bg-[#C2A389] text-white rounded-md"
             >
               Оформить заказ
             </button>

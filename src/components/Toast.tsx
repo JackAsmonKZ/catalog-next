@@ -35,7 +35,7 @@ export default function Toast() {
   return (
     <div className="fixed right-4 bottom-6 z-50 pointer-events-none">
       <div
-        className={`max-w-xs w-full bg-black text-white px-4 py-2 rounded shadow-lg transform transition-all duration-300 ease-out pointer-events-auto ${
+        className={`max-w-xs w-full bg-[#C2A389] text-white px-4 py-2 rounded shadow-lg transform transition-all duration-300 ease-out pointer-events-auto ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >

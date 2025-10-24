@@ -2,12 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Heart, Grid, Layers, Menu, X } from "lucide-react";
+import {
+  ShoppingCart,
+  Heart,
+  Grid,
+  Layers,
+  Menu,
+  X,
+  ArrowLeft,
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
   const [cartCount, setCartCount] = useState(0);
-  const [likesCount, setLikesCount] = useState(0);
   const [openMobile, setOpenMobile] = useState(false);
 
   useEffect(() => {
@@ -22,15 +31,6 @@ export default function Header() {
         setCartCount(total);
       } catch (e) {
         setCartCount(0);
-      }
-
-      try {
-        const raw = localStorage.getItem("catalog_likes");
-        const map = raw ? JSON.parse(raw) : {};
-        const totalLikes = Object.values(map).filter(Boolean).length;
-        setLikesCount(totalLikes);
-      } catch (e) {
-        setLikesCount(0);
       }
     };
 
@@ -58,6 +58,14 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button
+            onClick={() => router.back()}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200"
+            aria-label="Back"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+
+          <button
             onClick={() => setOpenMobile((v) => !v)}
             className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 md:hidden"
             aria-label="Menu"
@@ -69,39 +77,34 @@ export default function Header() {
             )}
           </button>
 
-          <a href="/" className="flex items-center gap-3 text-sm font-semibold">
-            <Layers className="w-6 h-6" />
+          <Link
+            href="/"
+            onClick={() => setOpenMobile(false)}
+            className="flex items-center text-sm font-semibold"
+          >
+            <img src="/logo.png" alt="ROOICELL" width={40} height={40} />
             <span>ROOICELL</span>
-          </a>
+          </Link>
         </div>
 
         <nav className="hidden md:flex items-center gap-6">
-          <a
+          <Link
             href="/catalog"
             className="flex items-center gap-2 text-sm hover:text-black"
           >
             <Grid className="w-4 h-4" /> Каталог
-          </a>
-          <a
+          </Link>
+          <Link
             href="/collections"
             className="flex items-center gap-2 text-sm hover:text-black"
           >
             <Layers className="w-4 h-4" /> Подборки
-          </a>
-          <a
-            href="/favorites"
-            className="flex items-center gap-2 text-sm hover:text-black"
-          >
-            <Heart className="w-4 h-4" /> Избранное
-            {likesCount > 0 && (
-              <span className="text-xs ml-1 text-gray-600">{likesCount}</span>
-            )}
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => router.push("/cart")}
+          <Link
+            href="/cart"
             className="relative p-2 rounded-md bg-gray-100 hover:bg-gray-200"
             aria-label="Cart"
           >
@@ -111,7 +114,7 @@ export default function Header() {
                 {cartCount}
               </span>
             )}
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -119,15 +122,20 @@ export default function Header() {
       {openMobile && (
         <div className="md:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-md">
           <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-2">
-            <a href="/catalog" className="flex items-center gap-2">
+            <Link
+              href="/catalog"
+              onClick={() => setOpenMobile(false)}
+              className="flex items-center gap-2"
+            >
               <Grid className="w-5 h-5" /> <span>Каталог</span>
-            </a>
-            <a href="/collections" className="flex items-center gap-2">
+            </Link>
+            <Link
+              href="/collections"
+              onClick={() => setOpenMobile(false)}
+              className="flex items-center gap-2"
+            >
               <Layers className="w-5 h-5" /> <span>Подборки</span>
-            </a>
-            <a href="/favorites" className="flex items-center gap-2">
-              <Heart className="w-5 h-5" /> <span>Избранное</span>
-            </a>
+            </Link>
           </div>
         </div>
       )}

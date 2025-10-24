@@ -176,3 +176,13 @@ export function getCartItemsCount(): number {
 export function getCartTotalQuantity(): number {
   return getCart().reduce((total, item) => total + item.quantity, 0);
 }
+
+export const getMinPrice = (volumes: { volume: string; price: number }[]) => {
+  if (!volumes || volumes.length === 0) return 0;
+  return Math.min(...volumes.map((v) => v.price));
+};
+
+export const shortDesc = (text: string, max = 120) => {
+  if (text.length <= max) return text;
+  return text.slice(0, max).trimEnd() + "…";
+};
