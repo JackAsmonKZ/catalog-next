@@ -32,7 +32,7 @@ export default function CollectionsPage() {
           <Link
             key={r.id}
             href={`/collections/${r.id}`}
-            className="block bg-[#E6D4C4] rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow"
+            className="block bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow"
           >
             <div className="flex flex-col h-full">
               <div className="flex-1">

@@ -7,6 +7,7 @@ import { tenge } from "@/constants/constants";
 import router from "next/router";
 import { getMinPrice, shortDesc, toggleLike } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   collection: Collection;
@@ -66,7 +67,7 @@ export default function ClientCollection({ collection, products }: Props) {
 
   return (
     <div>
-      <div className="bg-white p-2 rounded-lg shadow-sm">
+      <div className="bg-white p-2 mx-[10px] mb-[10px] rounded-lg shadow-sm">
         <div className="flex items-center justify-center flex-wrap gap-[10px] pb-[15px]">
           <div>
             <h1 className="text-2xl font-semibold">{collection.name}</h1>
@@ -89,11 +90,11 @@ export default function ClientCollection({ collection, products }: Props) {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-[10px] gap-y-[20px] px-[5px] mx-auto justify-center">
+      <div className="grid mt-[6px] grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-[10px] gap-y-[20px] px-[5px] w-full max-w-[1200px]">
         {products.map((product) => (
-          <article
+          <Link
             key={product.id}
-            onClick={() => router.push(`/catalog/${product.id}`)}
+            href={`/catalog/${product.id}`}
             className="max-w-[190px] rounded-[30px] bg-[#e0e0e0] shadow-[7px_7px_15px_#bebebe,-7px_-7px_15px_#ffffff] overflow-hidden cursor-pointer transition-shadow duration-200 flex flex-col"
           >
             <div className="relative">
@@ -133,7 +134,7 @@ export default function ClientCollection({ collection, products }: Props) {
                 </button>
               </div>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
 

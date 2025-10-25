@@ -223,15 +223,15 @@ export default function CatalogPage() {
           </div>
         </div>
 
-        <div>
-          <div className="flex flex-wrap gap-[10px] gap-y-[20px] px-[5px] mx-auto justify-center">
+        <div className="w-full flex justify-center">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-[10px] gap-y-[20px] px-[5px] w-full max-w-[1200px]">
             {filteredProducts.map((product) => {
               const isLiked = product.isLiked;
               return (
                 <article
                   key={product.id}
                   onClick={() => router.push(`/catalog/${product.id}`)}
-                  className="max-w-[190px] rounded-[30px] bg-[#e0e0e0] shadow-[7px_7px_15px_#bebebe,-7px_-7px_15px_#ffffff] overflow-hidden cursor-pointer transition-shadow duration-200 flex flex-col"
+                  className="rounded-[30px] bg-[#e0e0e0] shadow-[7px_7px_15px_#bebebe,-7px_-7px_15px_#ffffff] overflow-hidden cursor-pointer transition-shadow duration-200 flex flex-col"
                 >
                   <div className="relative">
                     <Image
@@ -243,7 +243,6 @@ export default function CatalogPage() {
                       placeholder="blur"
                       blurDataURL="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwMCIgd2lkdGg9IjEwMCI+PC9zdmc+"
                     />
-
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -268,7 +267,6 @@ export default function CatalogPage() {
                       </svg>
                     </button>
                   </div>
-
                   <div className="px-[10px] pt-[10px] pb-[15px] flex flex-col gap-3 justify-between flex-1">
                     <div>
                       <h3 className="text-sm font-medium text-gray-900 truncate">
@@ -278,7 +276,6 @@ export default function CatalogPage() {
                         {shortDesc(product.description, 95)}
                       </p>
                     </div>
-
                     <div className="flex items-center justify-between mt-2 px-[5px]">
                       <div className="text-sm font-semibold text-gray-900">
                         {getMinPrice(product.volumes)} {tenge}
@@ -297,12 +294,12 @@ export default function CatalogPage() {
                 </article>
               );
             })}
+            {filteredProducts.length === 0 && (
+              <div className="col-span-full text-center text-gray-500 py-12">
+                Нет товаров для отображения
+              </div>
+            )}
           </div>
-          {filteredProducts.length === 0 && (
-            <div className="col-span-full text-center text-gray-500 py-12">
-              Нет товаров для отображения
-            </div>
-          )}
         </div>
       </section>
     </main>

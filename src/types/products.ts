@@ -15,6 +15,15 @@ export const products: Product[] = [
     isLiked: false,
   },
   {
+    id: "prod-123",
+    name: "Колеса",
+    description: "Колеса для коляски для взрослых и детей",
+    image: "https://picsum.photos/200/150",
+    volumes: [{ volume: "150ml", price: 1290 }],
+    categoryId: "cat-1",
+    isLiked: false,
+  },
+  {
     id: "prod-2",
     name: "Пенка для умывания",
     description:

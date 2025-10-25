@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { products as allProducts } from "../../../src/types/products";
 import { tenge } from "@/constants/constants";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 type CartItem = { productId: string; volumeIndex: number; quantity: number };
 
@@ -79,6 +80,21 @@ export default function CartPage() {
     } catch (e) {}
   };
 
+  const generateWhatsAppLink = () => {
+    const phone = "77471658747";
+    const lines = items.map(
+      (it) =>
+        `${it.product.name} (${it.volume.volume}) x ${it.quantity} = ${
+          it.volume.price * it.quantity
+        } ${tenge}`
+    );
+    const text =
+      `Здравствуйте! Хочу оформить заказ:\n\n` +
+      lines.join("\n") +
+      `\n\nИтого: ${total} ${tenge}`;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  };
+
   if (cart.length === 0) {
     return (
       <main className="p-6 max-w-4xl mx-auto">
@@ -111,23 +127,27 @@ export default function CartPage() {
               className="flex gap-4 items-center bg-white p-4 rounded-lg shadow-sm"
             >
               <div className="flex-1 flex gap-[10px]">
-                <Image
-                  src={it.product.image}
-                  alt={it.product.name}
-                  width={96}
-                  height={96}
-                  className="w-24 h-24 object-cover rounded"
-                  placeholder="blur"
-                  blurDataURL="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwMCIgd2lkdGg9IjEwMCI+PC9zdmc+"
-                />
+                <Link
+                  href={`/catalog/${it.productId}`}
+                  className="text-sm font-medium hover:underline cursor-pointer h-fit"
+                >
+                  <Image
+                    src={it.product.image}
+                    alt={it.product.name}
+                    width={96}
+                    height={96}
+                    className="w-24 h-24 object-cover rounded"
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwMCIgd2lkdGg9IjEwMCI+PC9zdmc+"
+                  />
+                </Link>
                 <div className="w-full">
-                  <a
+                  <Link
                     href={`/catalog/${it.productId}`}
-                    className="text-sm font-medium hover:underline"
+                    className="text-sm font-medium hover:underline cursor-pointer h-fit"
                   >
                     {it.product.name}
-                  </a>
-
+                  </Link>
                   <div className="text-xs text-gray-500">
                     {it.volume.volume}
                   </div>
@@ -178,14 +198,8 @@ export default function CartPage() {
           <div className="mt-4">
             <button
               onClick={() => {
-                alert("Checkout placeholder");
-                try {
-                  window.dispatchEvent(
-                    new CustomEvent("show_toast", {
-                      detail: { message: "Переходим к оформлению заказа" },
-                    })
-                  );
-                } catch (e) {}
+                const url = generateWhatsAppLink();
+                window.open(url, "_blank");
               }}
               className="w-full px-4 py-2 bg-[#C2A389] text-white rounded-md"
             >

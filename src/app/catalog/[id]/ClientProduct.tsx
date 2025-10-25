@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import type { Product, Collection } from "../../../types/types";
 import Image from "next/image";
 import { tenge } from "@/constants/constants";
+import Link from "next/link";
 
 interface Props {
   product: Product;
@@ -115,23 +116,6 @@ export default function ClientProduct({ product, collections }: Props) {
                 {product.description}
               </p>
             </div>
-
-            <button
-              onClick={toggleLike}
-              className={`ml-4 p-2 rounded-full transition-colors ${
-                liked ? "bg-red-100 text-red-600" : "bg-white text-gray-500"
-              }`}
-              aria-label="like"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-5 h-5"
-              >
-                <path d="M12 21s-7.5-4.35-10-7.5C-0.5 9 4 4 8.5 6.5 11 8 12 10 12 10s1-2 3.5-3.5C20 4 24.5 9 22 13.5 19.5 16.65 12 21 12 21z" />
-              </svg>
-            </button>
           </div>
 
           <div className="mt-2">
@@ -175,34 +159,68 @@ export default function ClientProduct({ product, collections }: Props) {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 mb-[15px]">
             <h3 className="text-lg font-medium">Подборки с этим товаром</h3>
             <ul className="mt-2 flex flex-col gap-2">
               {collections.length === 0 && (
                 <li className="text-sm text-gray-500">Нет подборок</li>
               )}
-              {collections.map((c) => (
-                <li key={c.id}>
-                  <a
-                    href={`/collections/${c.id}`}
-                    className="text-sm text-blue-600 hover:underline"
-                  >
-                    {c.name}
-                  </a>
-                </li>
-              ))}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {collections.map((c) => (
+                  <Link key={c.id} href={`/collections/${c.id}`}>
+                    <div className="group rounded-2xl bg-[#e0e0e0] shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff] p-5 hover:shadow-[12px_12px_24px_#bebebe,-12px_-12px_24px_#ffffff] transition-all duration-300 cursor-pointer">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-gray-800 font-medium text-sm group-hover:text-[#C2A389] transition-colors duration-300">
+                          {c.name}
+                        </h3>
+                        <svg
+                          className="w-5 h-5 text-gray-400 group-hover:text-[#C2A389] group-hover:translate-x-1 transition-all duration-300"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </ul>
           </div>
         </div>
       </div>
 
-      {toast && (
-        <div className="fixed left-4 bottom-6 z-50">
-          <div className="bg-[#C2A389] text-white px-2 py-1 rounded shadow">
-            {toast}
-          </div>
+      <div
+        className={`fixed left-4 bottom-6 z-50 transition-all duration-300 ${
+          toast
+            ? "translate-x-0 opacity-100"
+            : "-translate-x-full opacity-0 pointer-events-none"
+        }`}
+      >
+        {" "}
+        <div className="bg-[#C2A389] text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-[fadeIn_0.3s_ease-out]">
+          <svg
+            className="w-5 h-5 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          <span className="text-sm font-medium">{toast}</span>
         </div>
-      )}
+      </div>
     </div>
   );
 }
